@@ -1,0 +1,31 @@
+<div class="verify-container">
+  <div *ngIf="!qrGenerated && !scannerEnabled" class="qr-section">
+    <button mat-raised-button color="primary" (click)="generateQR()" [disabled]="isLoading">
+      <span *ngIf="!isLoading">Generate QR Code</span>
+      <mat-spinner *ngIf="isLoading" diameter="24"></mat-spinner>
+    </button>
+  </div>
+
+  <div *ngIf="qrGenerated" class="qr-display">
+    <!-- <h3>Scan this QR Code with your Authenticator App</h3> -->
+    <!-- <img [src]="qrCodeUrl" alt="QR Code"> -->
+    <button mat-raised-button color="primary" (click)="toggleScanner()">
+      {{ scannerEnabled ? 'Stop Scanner' : 'Scan QR Code' }}
+    </button>
+  </div>
+
+  <div *ngIf="scannerEnabled" class="scanner-section">
+    <h3>Point your camera at the QR Code</h3>
+    <video #scannerVideo width="100%" playsinline></video>
+    <canvas #scannerCanvas style="display: none;"></canvas>
+  </div>
+
+  <div *ngIf="verificationSuccess" class="success-message">
+    <mat-icon>check_circle</mat-icon>
+    <span>Verification Successful!</span>
+  </div>
+
+  <div *ngIf="scanError" class="error-message">
+    {{ scanError }}
+  </div>
+</div>
